@@ -1,0 +1,4 @@
+SELECT Name, Platform, Global_Sales # 
+FROM vgsales_data_analisys_my_findings # Retrives from the Table named vgvgsales_data_analisys_my_findings
+ORDER BY Global_Sales DESC # Sorts the results in descending order
+LIMIT 10 # Limits the results to 10 
