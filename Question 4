@@ -1,0 +1,14 @@
+SELECT 
+    Year, 
+    COUNT(Name) AS Qty_Games, # Counts the number of games for each year
+    ROUND(SUM(Global_Sales), 2) AS Total_Global_Sales # Calculates the total global sales for each year
+FROM 
+    vgsales_data_analisys_my_findings
+WHERE 
+    Publisher = 'Nintendo' # Filters the data to include only games published by Nintendo
+    AND Year IS NOT NULL # Excludes rows where the year is null
+    AND Year != 'N/A'# Excludes rows where the year is 'N/A'
+GROUP BY 
+    Year
+ORDER BY 
+    Year ASC;
