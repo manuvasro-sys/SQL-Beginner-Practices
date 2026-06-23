@@ -1,6 +1,25 @@
-SELECT Genre, # Retrieves the genre of each game
-SUM(NA_Sales) AS TOTAL_NA, SUM(JP_Sales) AS TOTAL_JP # Sums the sales for each region
-FROM vgsales_data_analisys_my_findings # Specifies the table to query
-GROUP BY GENRE # Groups the results by genre
-ORDER BY TOTAL_NA,TOTAL_JP # Orders the results by total sales in North America and then Japan
-LIMIT 5 # Limits the results to the top 5 genres by total sales
+WITH RankingsRegionales AS ( # Creates a Common Table Expression (CTE) to calculate sales and rankings by genre
+    SELECT 
+        Genre,
+        ROUND(SUM(NA_Sales), 2) AS Total_Sales_NA, # Calculates the total sales for each genre in North America
+        RANK() OVER (ORDER BY SUM(NA_Sales) DESC) AS Rank_NA, # Ranks the genres by total sales in North America
+        ROUND(SUM(JP_Sales), 2) AS Total_Sales_JP, # Calculates the total sales for each genre in Japan
+        RANK() OVER (ORDER BY SUM(JP_Sales) DESC) AS Rank_JP # Ranks the genres by total sales in Japan
+    FROM 
+        vgsales_data_analisys_my_findings
+    GROUP BY 
+        Genre
+)
+SELECT # Retrieves the final results from the CTE
+    Genre,
+    Total_Sales_NA,
+    Rank_NA,
+    Total_Sales_JP,
+    Rank_JP
+FROM 
+    RankingsRegionales
+WHERE 
+    Rank_NA <= 5 OR Rank_JP <= 5 # Filters the results to include only the top 5 genres in each region
+ORDER BY 
+    Rank_NA ASC 
+LIMIT 5;
