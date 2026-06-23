@@ -1,0 +1,6 @@
+SELECT Genre, # Retrieves the genre of each game
+SUM(NA_Sales) AS TOTAL_NA, SUM(JP_Sales) AS TOTAL_JP # Sums the sales for each region
+FROM vgsales_data_analisys_my_findings # Specifies the table to query
+GROUP BY GENRE # Groups the results by genre
+ORDER BY TOTAL_NA,TOTAL_JP # Orders the results by total sales in North America and then Japan
+LIMIT 5 # Limits the results to the top 5 genres by total sales
