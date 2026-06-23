@@ -1,0 +1,6 @@
+# What are the total cumulative global sales for each platform (PS4, XOne, Wii, etc.)? 
+SELECT Platform, 
+SUM(Global_Sales) AS TOTAL_SALES # Calculates the total sales for each platform
+FROM vgsales_data_analisys_my_findings # Retrieves data from the table
+GROUP BY Platform # Groups the data by platform
+ORDER BY TOTAL_SALES DESC # Sorts the results in descending order
